@@ -19,7 +19,7 @@ class App extends React.Component {
     $.ajax({
       type: 'POST',
       url: 'http://localhost:1128/repos',
-      data: {term},
+      data: {username: term},
       dataType: 'application/json',
       success: () => {
         console.log('Successful search');
