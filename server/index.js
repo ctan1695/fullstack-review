@@ -12,9 +12,14 @@ app.post('/repos', function (req, res) {
   // This route should take the github username provided
   // and get the repo information from the github API, then
   // save the repo information in the database
-  console.log('reached server: ', req.body);
+  var repos_schema = {
+    owner_name: req.body.username,
+    repos: []
+  };
 
-  helper.getReposByUsername(req.body.username);
+  var helperResults = helper.getReposByUsername(req.body.username);
+
+  console.log('helperResults: ', helperResults);
 });
 
 app.get('/repos', function (req, res) {
