@@ -17,10 +17,15 @@ let getReposByUsername = (username) => {
 
   axios.get(options.url)
     .then((response) => {
-      console.log('axios response... repos url: ', response.data.repos_url);
       axios.get(response.data.repos_url)
-        .then((response_two) => {
-          console.log('axios response 2... after getting all repors: ', response_two);
+        .then((all_repos) => {
+          console.log('repo owner name: ', all_repos.data[0].owner.login);
+          console.log('repo owner id: ', all_repos.data[0].owner.id);
+          console.log('repo id: ', all_repos.data[0].id);
+          console.log('repo name: ', all_repos.data[0].name);
+          console.log('repo url: ', all_repos.data[0].html_url);
+          console.log('repo description: ', all_repos.data[0].description);
+          console.log('repo forks: ', all_repos.data[0].forks_count);
         })
     })
 }
