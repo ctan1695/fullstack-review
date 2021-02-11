@@ -1,8 +1,20 @@
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/fetcher');
 
+/* Top 25: number of forks... more forks at the top of the list */
+
 let repoSchema = mongoose.Schema({
-  // TODO: your schema here!
+  owner_name: String,
+  owner_id: Number,
+  repo_urls: [
+    repo_url: {
+      repo_id: Number,
+      repo_name: String,
+      repo_url: String,
+      repo_description: String
+      repo_forks: Number
+    }
+  ]
 });
 
 let Repo = mongoose.model('Repo', repoSchema);

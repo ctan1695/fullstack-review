@@ -1,0 +1,40 @@
+const repos = new mongoose.Schema({
+  owner_name: String,
+  owner_id: Number,
+  repo_urls: {
+    repo_url: {
+      repo_id: Number,
+      repo_name: String,
+      repo_url: String,
+      repo_description: String
+    }
+  }
+})
+
+
+/*
+Example:
+repos = {
+  owner_name: octocat,
+  owner_id: 583231,
+  repo_urls: [
+    repo_url: {
+      repo_id: 18221276,
+      repo_name: git-consortium,
+      repo_url: https://github.com/octocat/git-consortium,
+      repo_description: This repo is for demonstration purposes only.
+    },
+    repo_url: {
+      repo_id: 20978623,
+      repo_name: hello-worId,
+      repo_url: https://github.com/octocat/hello-worId,
+      repo_description: My first repository on GitHub.
+    }
+  ]
+}
+
+
+*/
+
+
+
