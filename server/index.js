@@ -16,12 +16,14 @@ app.post('/repos', function (req, res) {
   // save the repo information in the database
   var repos_schema = {
     owner_name: req.body.username,
-    repos: []
+    // repos: []
+    repo_name: ''
   };
 
   githubHelper.getReposByUsername(req.body.username)
     .then((response) => {
-      repos_schema.repos = response;
+      // repos_schema.repos = response;
+      repos_schema.repo_name = response[0].repo_name;
       dbHelper.save(repos_schema);
     })
 

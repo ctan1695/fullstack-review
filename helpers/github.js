@@ -38,6 +38,9 @@ let getReposByUsername = (username) => {
 
       return Promise.resolve(repos);
     })
+    .catch((err) => {
+      console.log('Error retrieving user repos: ', err);
+    })
 }
 
 module.exports.getReposByUsername = getReposByUsername;
