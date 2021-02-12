@@ -30,8 +30,10 @@ app.post('/repos', function (req, res) {
 app.get('/repos', function (req, res) {
   // TODO - your code here!
   // This route should send back the top 25 repos
-  console.log('GET REPOS req: ', req.query.username);
-  dbHelper.getTopRepos(req.query.username);
+  dbHelper.getTopRepos()
+    .then((result) => {
+      console.log('result: ', result);
+    })
 });
 
 let port = 1128;

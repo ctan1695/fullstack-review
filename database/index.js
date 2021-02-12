@@ -49,37 +49,43 @@ let save = (newDocument) => {
   })
 }
 
-let getTopRepos = (username) => {
+let getTopRepos = () => {
   return Repo.find({}, (err, doc) => {
     if (err) {
       return handleError(err);
+    } else {
+      return Promise.resolve(doc);
     }
-    var sortedRepos = [];
-    var docLength = doc.length;
+  })
+    .then((doc) => {
+      var sortedRepos = [];
+      var docLength = doc.length;
 
-    while (docLength > 0) {
-      for (var i = 0; i < doc[docLength - 1].repos.length; i++) {
-        var singleRepo = doc[docLength - 1].repos[i];
+      while (docLength > 0) {
+        for (var i = 0; i < doc[docLength - 1].repos.length; i++) {
+          var singleRepo = doc[docLength - 1].repos[i];
 
-        if (sortedRepos.length === 0) {
-          sortedRepos.push(singleRepo);
+          if (sortedRepos.length === 0) {
+            sortedRepos.push(singleRepo);
+          }
+
+          if (singleRepo.repo_forks >= sortedRepos[0].repo_forks) {
+            //add repo to front of list if number of forks is larger than the first item in the array
+            sortedRepos.unshift(singleRepo);
+          }
         }
 
-        if (singleRepo.repo_forks >= sortedRepos[0].repo_forks) {
-          //add repo to front of list if number of forks is larger than the first item in the array
-          sortedRepos.unshift(singleRepo);
-        }
+        docLength--;
       }
 
-      docLength--;
-    }
-    console.log('sorted repos: ', sortedRepos);
-    return sortedRepos;
-  })
+      var finalSortedRepos = sortedRepos.slice(0, 26);
+      return Promise.resolve(finalSortedRepos);
+    })
   .catch(() => {
     console.log('Error querying database for username: ', username);
   })
 }
+
 
 module.exports.save = save;
 module.exports.getTopRepos = getTopRepos;
