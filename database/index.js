@@ -37,7 +37,7 @@ let save = (newDocument) => {
       })
       repoSchemaInstance.save()
         .then(() => {
-          console.log('Successfully saved document: ', repoSchemaInstance);
+          console.log('Successfully saved repos');
         })
     } else {
       console.log('Document already exists for this username');
@@ -50,28 +50,31 @@ let save = (newDocument) => {
 }
 
 let getTopRepos = (username) => {
-  console.log('getTopRepos');
-  Repo.find({owner_name: username}, (err, doc) => {
+  return Repo.find({}, (err, doc) => {
     if (err) {
       return handleError(err);
     }
     var sortedRepos = [];
+    var docLength = doc.length;
 
-    for (var i = 0; i < doc[0].repos.length; i++) {
-      var singleRepo = doc[0].repos[i];
-      console.log('singleRepo: ', singleRepo);
+    while (docLength > 0) {
+      for (var i = 0; i < doc[docLength - 1].repos.length; i++) {
+        var singleRepo = doc[docLength - 1].repos[i];
 
-      if (sortedRepos.length === 0) {
-        sortedRepos.push(singleRepo);
+        if (sortedRepos.length === 0) {
+          sortedRepos.push(singleRepo);
+        }
+
+        if (singleRepo.repo_forks >= sortedRepos[0].repo_forks) {
+          //add repo to front of list if number of forks is larger than the first item in the array
+          sortedRepos.unshift(singleRepo);
+        }
       }
 
-      if (singleRepo.repo_forks >= sortedRepos[0].repo_forks) {
-        //add repo to front of list if number of forks is larger than the first item in the array
-        sortedRepos.unshift(singleRepo);
-      }
+      docLength--;
     }
-
     console.log('sorted repos: ', sortedRepos);
+    return sortedRepos;
   })
   .catch(() => {
     console.log('Error querying database for username: ', username);
