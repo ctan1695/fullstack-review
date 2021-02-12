@@ -68,9 +68,7 @@ let getTopRepos = () => {
 
           if (sortedRepos.length === 0) {
             sortedRepos.push(singleRepo);
-          }
-
-          if (singleRepo.repo_forks >= sortedRepos[0].repo_forks) {
+          } else if (singleRepo.repo_forks >= sortedRepos[0].repo_forks) {
             //add repo to front of list if number of forks is larger than the first item in the array
             sortedRepos.unshift(singleRepo);
           }

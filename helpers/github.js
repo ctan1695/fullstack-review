@@ -34,6 +34,7 @@ let getReposByUsername = (username) => {
         };
 
         repos.push(repoDetails);
+        console.log('repos: ', repos);
       }
 
       return Promise.resolve(repos);
