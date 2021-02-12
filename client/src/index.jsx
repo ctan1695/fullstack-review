@@ -15,17 +15,25 @@ class App extends React.Component {
 
   search (term) {
     console.log(`${term} was searched`);
-    // jquery's ajax request to send POST request
+
+    /*CT: commenting out for now to test get */
+    // $.ajax({
+    //   type: 'POST',
+    //   url: 'http://localhost:1128/repos',
+    //   data: {username: term},
+    //   dataType: 'application/json',
+    //   success: () => {
+    //     console.log('Successful search');
+    //   }
+    // })
     $.ajax({
-      type: 'POST',
+      type: 'GET',
       url: 'http://localhost:1128/repos',
       data: {username: term},
-      dataType: 'application/json',
       success: () => {
-        console.log('Successful search');
+        console.log('Successful get');
       }
     })
-
   }
 
   render () {

@@ -27,15 +27,7 @@ let save = (newDocument) => {
   //   console.log('removed')
   // })
 
-  Repo.find({}, (err, doc) => {
-    console.log('All documents: ', doc);
-  })
-  .catch(() => {
-    console.log('err');
-  })
-
   Repo.findOne({owner_name: newDocument.owner_name}, (err, doc) => {
-    console.log('findingbyowner', doc);
     if (err) {
       return handleError(err);
     } else if (!doc) {
@@ -48,7 +40,8 @@ let save = (newDocument) => {
           console.log('Successfully saved document: ', repoSchemaInstance);
         })
     } else {
-      console.log('Document already exists for: ', newDocument);
+      console.log('Document already exists for this username');
+      return doc;
     }
   })
   .catch((err) => {
@@ -56,4 +49,34 @@ let save = (newDocument) => {
   })
 }
 
+let getTopRepos = (username) => {
+  console.log('getTopRepos');
+  Repo.find({owner_name: username}, (err, doc) => {
+    if (err) {
+      return handleError(err);
+    }
+    var sortedRepos = [];
+
+    for (var i = 0; i < doc[0].repos.length; i++) {
+      var singleRepo = doc[0].repos[i];
+      console.log('singleRepo: ', singleRepo);
+
+      if (sortedRepos.length === 0) {
+        sortedRepos.push(singleRepo);
+      }
+
+      if (singleRepo.repo_forks >= sortedRepos[0].repo_forks) {
+        //add repo to front of list if number of forks is larger than the first item in the array
+        sortedRepos.unshift(singleRepo);
+      }
+    }
+
+    console.log('sorted repos: ', sortedRepos);
+  })
+  .catch(() => {
+    console.log('Error querying database for username: ', username);
+  })
+}
+
 module.exports.save = save;
+module.exports.getTopRepos = getTopRepos;
