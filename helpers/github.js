@@ -16,26 +16,27 @@ let getReposByUsername = (username) => {
     }
   };
 
-  axios.get(options.url)
+  return axios.get(options.url)
     .then((response) => {
-      return axios.get(response.data.repos_url)
-        .then((all_repos) => {
-          var repos = [];
+      return axios.get(response.data.repos_url);
+    })
+    .then((all_repos) => {
+      var repos = [];
 
-          for (var i = 0; i < all_repos.data.length; i++) {
-            var repo = all_repos.data[i];
-            var repoDetails = {
-              repo_id: repo.id,
-              repo_name: repo.name,
-              repo_url: repo.html_url,
-              repo_description: repo.description,
-              repo_forks: repo.forks_count
-            };
+      for (var i = 0; i < all_repos.data.length; i++) {
+        var repo = all_repos.data[i];
+        var repoDetails = {
+          repo_id: repo.id,
+          repo_name: repo.name,
+          repo_url: repo.html_url,
+          repo_description: repo.description,
+          repo_forks: repo.forks_count
+        };
 
-            repos.push(repoDetails);
-          }
-          console.log('repos: ', repos);
-        })
+        repos.push(repoDetails);
+      }
+
+      return Promise.resolve(repos);
     })
 }
 

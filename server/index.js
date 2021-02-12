@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const helper = require(__dirname + '/../helpers/github.js');
+const githubHelper = require(__dirname + '/../helpers/github.js');
+const dbHelper = require(__dirname + '/../database/index.js');
+
 let app = express();
 
 app.use(express.static(__dirname + '/../client/dist'));
@@ -17,9 +19,12 @@ app.post('/repos', function (req, res) {
     repos: []
   };
 
-  var helperResults = helper.getReposByUsername(req.body.username);
+  githubHelper.getReposByUsername(req.body.username)
+    .then((response) => {
+      repos_schema.repos = response;
+      dbHelper.save(repos_schema);
+    })
 
-  console.log('helperResults: ', helperResults);
 });
 
 app.get('/repos', function (req, res) {
