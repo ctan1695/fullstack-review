@@ -64,6 +64,7 @@ let getTopRepos = () => {
       while (docLength > 0) {
         for (var i = 0; i < doc[docLength - 1].repos.length; i++) {
           var singleRepo = doc[docLength - 1].repos[i];
+          singleRepo.owner_name = doc[docLength - 1].owner_name;
 
           if (sortedRepos.length === 0) {
             sortedRepos.push(singleRepo);

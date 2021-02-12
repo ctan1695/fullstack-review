@@ -11,27 +11,31 @@ class App extends React.Component {
       repos: []
     }
 
+    this.componentDidMount = this.componentDidMount.bind(this);
+  }
+
+  componentDidMount () {
+    $.ajax({
+      type: 'GET',
+      url: 'http://localhost:1128/repos',
+      success: (response) => {
+        console.log('Successful get: ', response.length.toString());
+        this.setState({repos: response});
+      }
+    })
+
   }
 
   search (term) {
     console.log(`${term} was searched`);
 
-    /*CT: commenting out for now to test get */
-    // $.ajax({
-    //   type: 'POST',
-    //   url: 'http://localhost:1128/repos',
-    //   data: {username: term},
-    //   dataType: 'application/json',
-    //   success: () => {
-    //     console.log('Successful search');
-    //   }
-    // })
     $.ajax({
-      type: 'GET',
+      type: 'POST',
       url: 'http://localhost:1128/repos',
       data: {username: term},
+      dataType: 'application/json',
       success: () => {
-        console.log('Successful get');
+        console.log('Successful search');
       }
     })
   }

@@ -23,8 +23,11 @@ app.post('/repos', function (req, res) {
     .then((response) => {
       repos_schema.repos = response;
       dbHelper.save(repos_schema);
+      res.end();
     })
-
+    .catch((err) => {
+      console.log('Error getReposByUsername: ', err);
+    })
 });
 
 app.get('/repos', function (req, res) {
@@ -33,6 +36,10 @@ app.get('/repos', function (req, res) {
   dbHelper.getTopRepos()
     .then((result) => {
       console.log('result: ', result);
+      res.send(result);
+    })
+    .catch((err) => {
+      console.log('Error getTopRepos: ', err);
     })
 });
 
