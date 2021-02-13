@@ -58,6 +58,7 @@ let getTopRepos = () => {
     }
   })
     .then((doc) => {
+      console.log('doc: ', doc.data);
       var sortedRepos = [];
       var docLength = doc.length;
 
@@ -66,18 +67,17 @@ let getTopRepos = () => {
           var singleRepo = doc[docLength - 1].repos[i];
           singleRepo.owner_name = doc[docLength - 1].owner_name;
 
-          if (sortedRepos.length === 0) {
-            sortedRepos.push(singleRepo);
-          } else if (singleRepo.repo_forks >= sortedRepos[0].repo_forks) {
-            //add repo to front of list if number of forks is larger than the first item in the array
-            sortedRepos.unshift(singleRepo);
-          }
+          sortedRepos.push(singleRepo);
         }
 
         docLength--;
       }
 
-      var finalSortedRepos = sortedRepos.slice(0, 26);
+      sortedRepos.sort((a, b) => {
+        return b.repo_forks - a.repo_forks;
+      })
+
+      var finalSortedRepos = sortedRepos.length > 25 ? sortedRepos.slice(0, 25) : sortedRepos;
       return Promise.resolve(finalSortedRepos);
     })
   .catch(() => {
