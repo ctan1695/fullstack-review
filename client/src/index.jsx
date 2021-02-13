@@ -4,6 +4,8 @@ import $ from 'jquery';
 import Search from './components/Search.jsx';
 import RepoList from './components/RepoList.jsx';
 
+const urlPath = process.env.NODE_ENV === 'production'? '/repos' : 'http://localhost:1128/repos';
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -17,7 +19,7 @@ class App extends React.Component {
   componentDidMount () {
     $.ajax({
       type: 'GET',
-      url: '/repos',
+      url: urlPath,
       success: (response) => {
         console.log('Successful GET: ', response.length.toString());
         this.setState({repos: response});
@@ -33,7 +35,7 @@ class App extends React.Component {
     console.log(`${term} was searched`);
     $.ajax({
       type: 'POST',
-      url: '/repos',
+      url: urlPath,
       data: {username: term},
       dataType: 'text',
       success: (response) => {
