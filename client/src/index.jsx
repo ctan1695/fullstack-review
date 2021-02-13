@@ -19,7 +19,7 @@ class App extends React.Component {
       type: 'GET',
       url: 'http://localhost:1128/repos',
       success: (response) => {
-        console.log('Successful get: ', response.length.toString());
+        console.log('Successful GET: ', response.length.toString());
         this.setState({repos: response});
       }
     })
@@ -32,11 +32,15 @@ class App extends React.Component {
       type: 'POST',
       url: 'http://localhost:1128/repos',
       data: {username: term},
-      dataType: 'application/json',
-      success: () => {
-        console.log('Successful search');
+      dataType: 'text',
+      success: (response) => {
+        this.setState({repos: JSON.parse(response)});
+      },
+      error: (err) => {
+        console.log('Errored POST: ', err);
       }
     })
+
   }
 
   render () {

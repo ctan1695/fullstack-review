@@ -58,7 +58,6 @@ let getTopRepos = () => {
     }
   })
     .then((doc) => {
-      console.log('doc: ', doc.data);
       var sortedRepos = [];
       var docLength = doc.length;
 
