@@ -2,9 +2,12 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 // mongoose.connect('mongodb://localhost/fetcher');
 if (process.env.NODE_ENV === 'production') {
-  mongoose.connect(process.env.MONGODB_URI)
-  .catch((err) => {
-    console.log('Error connecting mongoose, ', err);
+  mongoose.connect(process.env.MONGODB_URI, (err, db) => {
+    if (err) {
+      console.log('Error connecting to db, ', err);
+    } else {
+      console.log('Connected to db: ', process.env.MONGODB_URI);
+    }
   })
 } else {
   mongoose.connect('mongodb://localhost/fetcher');
