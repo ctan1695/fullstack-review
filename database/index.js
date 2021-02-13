@@ -52,7 +52,11 @@ let save = (newDocument) => {
 }
 
 let getTopRepos = () => {
+  console.log('In getTopRepos');
   return Repo.find({}, (err, doc) => {
+    console.log(' err: ', err);
+    console.log(' doc: ', doc);
+
     if (err) {
       return handleError(err);
     } else {
@@ -60,6 +64,7 @@ let getTopRepos = () => {
     }
   })
     .then((doc) => {
+      console.log('.then doc: ', doc);
       var sortedRepos = [];
       var docLength = doc.length;
 
@@ -79,6 +84,7 @@ let getTopRepos = () => {
       })
 
       var finalSortedRepos = sortedRepos.length > 25 ? sortedRepos.slice(0, 25) : sortedRepos;
+      console.log('finalSortedRepos: ', finalSortedRepos);
       return Promise.resolve(finalSortedRepos);
     })
   .catch(() => {
