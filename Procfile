@@ -1,1 +1,1 @@
-web: node server/index.js --user=db-user
+web: node server/index.js
