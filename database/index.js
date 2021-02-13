@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
 // mongoose.connect('mongodb://localhost/fetcher');
 
 mongoose.connect(process.env.MONGODB_URI);
@@ -62,7 +63,7 @@ let getTopRepos = () => {
     } else {
       return Promise.resolve(doc);
     }
-  }).maxTimeMS(10000)
+  })
     .then((doc) => {
       console.log('.then doc: ', doc);
       var sortedRepos = [];
