@@ -42,6 +42,9 @@ let save = (newDocument) => {
         .then(() => {
           console.log('Successfully saved repos');
         })
+        .catch((err) => {
+          console.log('Error while saving repo: ', err);
+        })
     } else {
       console.log('Document already exists for this username');
       return doc;
@@ -63,7 +66,7 @@ let getTopRepos = () => {
     } else {
       return Promise.resolve(doc);
     }
-  })
+    })
     .then((doc) => {
       console.log('.then doc: ', doc);
       var sortedRepos = [];
@@ -88,9 +91,9 @@ let getTopRepos = () => {
       console.log('finalSortedRepos: ', finalSortedRepos);
       return Promise.resolve(finalSortedRepos);
     })
-  .catch(() => {
-    console.log('Error querying database for username: ', username);
-  })
+    .catch(() => {
+      console.log('Error querying database for username: ', username);
+    })
 }
 
 
