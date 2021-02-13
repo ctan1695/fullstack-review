@@ -17,7 +17,7 @@ class App extends React.Component {
   componentDidMount () {
     $.ajax({
       type: 'GET',
-      url: 'http://localhost:1128/repos',
+      url: '/repos',
       success: (response) => {
         console.log('Successful GET: ', response.length.toString());
         this.setState({repos: response});
@@ -30,7 +30,7 @@ class App extends React.Component {
     console.log(`${term} was searched`);
     $.ajax({
       type: 'POST',
-      url: 'http://localhost:1128/repos',
+      url: '/repos',
       data: {username: term},
       dataType: 'text',
       success: (response) => {
