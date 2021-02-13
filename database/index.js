@@ -2,7 +2,10 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 // mongoose.connect('mongodb://localhost/fetcher');
 
-mongoose.connect(process.env.MONGODB_URI);
+mongoose.connect(process.env.MONGODB_URI)
+  .catch((err) => {
+    console.log('Error connecting mongoose, ', err);
+  })
 
 /* Top 25: number of forks... more forks at the top of the list */
 
