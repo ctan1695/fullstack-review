@@ -62,7 +62,7 @@ let getTopRepos = () => {
     } else {
       return Promise.resolve(doc);
     }
-  })
+  }).maxTimeMS(10000)
     .then((doc) => {
       console.log('.then doc: ', doc);
       var sortedRepos = [];
