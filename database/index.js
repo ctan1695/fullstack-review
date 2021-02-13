@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/fetcher');
+// mongoose.connect('mongodb://localhost/fetcher');
+
+mongoose.connect(process.env.MONGODB_URI);
 
 /* Top 25: number of forks... more forks at the top of the list */
 
