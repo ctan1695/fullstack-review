@@ -49,7 +49,7 @@ app.get('/repos', function (req, res) {
 });
 
 let port = process.env.PORT;
-if (port === null || port === '') {
+if (!port || port === '') {
   port = 1128;
 }
 
