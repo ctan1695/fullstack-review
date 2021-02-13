@@ -1,9 +1,8 @@
 const axios = require('axios');
-const config;
 
 //Only look for config file if it's not production!
 if (process.env.NODE_ENV !== 'production') {
-  config = require('../config.js');
+  const config = require('../config.js');
 }
 
 let getReposByUsername = (username) => {
