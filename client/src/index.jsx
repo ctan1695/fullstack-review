@@ -21,6 +21,9 @@ class App extends React.Component {
       success: (response) => {
         console.log('Successful GET: ', response.length.toString());
         this.setState({repos: response});
+      },
+      error: (err) => {
+        console.log('Errored GET: ', err);
       }
     })
 
