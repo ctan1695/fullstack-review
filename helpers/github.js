@@ -1,17 +1,21 @@
 const axios = require('axios');
+var token;
 
 //Only look for config file if it's not production!
-// if (process.env.NODE_ENV !== 'production') {
-  // const config = require('../config.js');
-// }
+if (process.env.NODE_ENV !== 'production') {
+  const config = require('../config.js');
+  token = config.TOKEN;
+} else {
+  token = process.env.GITHUB_API_TOKEN;
+}
+
 
 let getReposByUsername = (username) => {
   let options = {
     url: 'https://api.github.com/users/' + username.toString(),
     headers: {
       'User-Agent': 'request',
-      // 'Authorization': `token ${process.env.GITHUB_API_TOKEN || config.TOKEN}`
-      'Authorization': `token ${process.env.GITHUB_API_TOKEN}`
+      'Authorization': `token ${token}`
     }
   };
 

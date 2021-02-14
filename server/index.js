@@ -40,7 +40,6 @@ app.get('/repos', function (req, res) {
   // This route should send back the top 25 repos
   dbHelper.getTopRepos()
     .then((result) => {
-      //console.log(' GET result: ', result);
       res.send(result);
     })
     .catch((err) => {
@@ -53,8 +52,6 @@ console.log('port: ', port);
 if (!port || port === '') {
   port = 1128;
 }
-
-console.log('process.env.PORT: ', process.env.MONGODB_URI);
 
 app.listen(port, function() {
   console.log(`listening on port ${port}`);

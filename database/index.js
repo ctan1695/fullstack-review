@@ -1,20 +1,7 @@
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
-// mongoose.connect('mongodb://localhost/fetcher');
-// if (process.env.NODE_ENV === 'production') {
-//   mongoose.connect(process.env.MONGODB_URI, (err, db) => {
-//     if (err) {
-//       console.log('Error connecting to db, ', err);
-//     } else {
-//       console.log('Connected to db: ', process.env.MONGODB_URI);
-//     }
-//   })
-// } else {
-//   mongoose.connect('mongodb://localhost/fetcher');
-// }
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/fetcher', {useNewUrlParser: true})
-// mongoose.connect(process.env.MONGODB_URI.toString(), {useMongoClient: true})
   .then(() => {
     console.log('success connecting to db')
   })
@@ -88,9 +75,6 @@ let save = (newDocument) => {
 let getTopRepos = () => {
   console.log('In getTopRepos');
   return Repo.find({}, (err, doc) => {
-    //console.log(' err: ', err);
-    //console.log(' doc: ', doc);
-
     if (err) {
       return handleError(err);
     } else {
@@ -98,7 +82,6 @@ let getTopRepos = () => {
     }
     })
     .then((doc) => {
-      //console.log('.then doc: ', doc);
       var sortedRepos = [];
       var docLength = doc.length;
 
@@ -118,7 +101,6 @@ let getTopRepos = () => {
       })
 
       var finalSortedRepos = sortedRepos.length > 25 ? sortedRepos.slice(0, 25) : sortedRepos;
-      //console.log('finalSortedRepos: ', finalSortedRepos);
       return Promise.resolve(finalSortedRepos);
     })
     .catch(() => {
