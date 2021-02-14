@@ -21,7 +21,7 @@ app.post('/repos', function (req, res) {
 
   githubHelper.getReposByUsername(req.body.username)
     .then((response) => {
-      console.log('POST response: ', response);
+      //console.log('POST response: ', response);
       repos_schema.repos = response;
       dbHelper.save(repos_schema)
     })
@@ -40,7 +40,7 @@ app.get('/repos', function (req, res) {
   // This route should send back the top 25 repos
   dbHelper.getTopRepos()
     .then((result) => {
-      console.log(' GET result: ', result);
+      //console.log(' GET result: ', result);
       res.send(result);
     })
     .catch((err) => {

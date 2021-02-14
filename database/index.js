@@ -14,6 +14,15 @@ mongoose.Promise = global.Promise;
 // }
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/fetcher');
+var database = mongoose.connection;
+
+database.on('error', err => {
+  console.log('error connecting to db!');
+})
+
+database.once('open', () => {
+  console.log('successfully connecting to db');
+})
 
 /* Top 25: number of forks... more forks at the top of the list */
 
@@ -69,8 +78,8 @@ let save = (newDocument) => {
 let getTopRepos = () => {
   console.log('In getTopRepos');
   return Repo.find({}, (err, doc) => {
-    console.log(' err: ', err);
-    console.log(' doc: ', doc);
+    //console.log(' err: ', err);
+    //console.log(' doc: ', doc);
 
     if (err) {
       return handleError(err);
@@ -79,7 +88,7 @@ let getTopRepos = () => {
     }
     })
     .then((doc) => {
-      console.log('.then doc: ', doc);
+      //console.log('.then doc: ', doc);
       var sortedRepos = [];
       var docLength = doc.length;
 
@@ -99,7 +108,7 @@ let getTopRepos = () => {
       })
 
       var finalSortedRepos = sortedRepos.length > 25 ? sortedRepos.slice(0, 25) : sortedRepos;
-      console.log('finalSortedRepos: ', finalSortedRepos);
+      //console.log('finalSortedRepos: ', finalSortedRepos);
       return Promise.resolve(finalSortedRepos);
     })
     .catch(() => {
