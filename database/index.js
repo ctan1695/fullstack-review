@@ -17,8 +17,8 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/fetcher')
   .then(() => {
     console.log('success connecting to db')
   })
-  .catch(() => {
-    console.log('error connecting to db')
+  .catch((err) => {
+    console.log('error connecting to db: ', err)
   })
 
 var database = mongoose.connection;
