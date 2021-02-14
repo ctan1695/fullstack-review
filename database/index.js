@@ -13,7 +13,7 @@ mongoose.Promise = global.Promise;
 //   mongoose.connect('mongodb://localhost/fetcher');
 // }
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/fetcher')
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/fetcher', {useMongoClient: true})
   .then(() => {
     console.log('success connecting to db')
   })
