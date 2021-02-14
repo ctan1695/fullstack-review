@@ -16,6 +16,8 @@ mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/fetcher');
 var database = mongoose.connection;
 
+console.log('database: ', database);
+
 database.on('error', err => {
   console.log('error connecting to db!');
 })
