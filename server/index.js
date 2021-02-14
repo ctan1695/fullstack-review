@@ -54,7 +54,7 @@ if (!port || port === '') {
   port = 1128;
 }
 
-console.log('port: ', port);
+console.log('process.env.PORT: ', process.env.MONGODB_URI);
 
 app.listen(port, function() {
   console.log(`listening on port ${port}`);
